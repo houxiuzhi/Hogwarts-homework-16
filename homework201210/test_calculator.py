@@ -24,7 +24,6 @@ class Test_calculator:
         # add1.append(self.cal.add(a,b))
         # for i in range(16):
         #     assert add1[i]== expect[i]
-        #     i=i+1
         '''
 
     @pytest.mark.parametrize("a,b,expect",
