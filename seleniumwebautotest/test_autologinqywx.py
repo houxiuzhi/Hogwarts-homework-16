@@ -45,15 +45,15 @@ class TestAutoLoginQYWX():
         # 添加成员信息
         self.driver.find_element_by_id('username').send_keys("张三1")
         self.driver.find_element_by_id('memberAdd_english_name').send_keys('zhangsan1')
-        self.driver.find_element_by_id('memberAdd_acctid').send_keys('00003')
-        self.driver.find_element_by_id('memberAdd_phone').send_keys('13011112223')
+        self.driver.find_element_by_id('memberAdd_acctid').send_keys('00005')
+        self.driver.find_element_by_id('memberAdd_phone').send_keys('13011112225')
         self.driver.find_element_by_link_text("保存").click()
         time.sleep(2)
 
         # 去找刚刚加的人的手机号
-        iphone = self.driver.find_element_by_xpath('//*[@title="13011112223"]')
+        iphone = self.driver.find_element_by_xpath('//*[@title="13011112225"]')
         # 断言如果匹配到了iPhone就说明添加成功了
-        if iphone:
+        if iphone.text == '13011112225':
             pass
         else:
             raise Exception
