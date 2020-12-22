@@ -17,6 +17,7 @@ class ContactPage(BasePage):
         # 解决循环引用的问题
         from pageobject.page.addmemberpage import AddmemberPage
         self.find(self._locator_goto_addmember_page).click()
+        # self.driver把这个页面的driver给AddmemberPage让操作连续起来
         return AddmemberPage(self.driver)
 
     def goto_adddepartment_page(self):

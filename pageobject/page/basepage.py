@@ -4,6 +4,10 @@ from selenium.webdriver.android.webdriver import WebDriver
 
 
 class BasePage:
+    '''
+    每次继承Basepage需要初始化一次，但重新初始化一次driver就开启一个新的会话，
+    比如首页开启一个，到加成员又开启一个，操作就不连续了
+    '''
 
     def __init__(self, base_driver=None):
         # 注解，不是赋值操作。用作ide的类型提示
