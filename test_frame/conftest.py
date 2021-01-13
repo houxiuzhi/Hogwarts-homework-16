@@ -5,9 +5,9 @@ import os
 import subprocess
 import shlex
 
-@pytest.fixture(scope='class',autouse=True)
+@pytest.fixture(scope='module',autouse=True)
 def record_vedio():
-    cmd = shlex.split("scrcpy --record tmp.mp4")
+    cmd = "scrcpy --record tmp.mp4"
     p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     print(p)
     yield
