@@ -1,10 +1,23 @@
-def black_wragger(fun):
-    def wragger(*args,**kwargs):
+from functools import wraps
+
+import allure
+import logging
+logging.basicConfig(level=logging.INFO)
+
+def black_wrapper(fun):
+    @wraps(fun)
+    def wrapper(*args,**kwargs):
         basepage = args[0]
         try:
+            logging.info('开始找blacklist元素\nargs:'+str(args)+'kwargs:'+str(kwargs))
             return fun(*args,**kwargs)
         #如果元素没找到去捕获异常
         except Exception as e:
+            with allure.step("截图"):
+                basepage.driver.save_screenshot('tmp.png')
+                with open('tmp.png','rb') as f:
+                    data = f.read()
+                allure.attach.file("tmp.png",attachment_type=allure.attachment_type.PNG)
             for black in basepage.blacklist:
                 #现在black是个元祖
                 print(black)
@@ -19,4 +32,4 @@ def black_wragger(fun):
                     return fun(*args,**kwargs)
             raise e
 
-    return wragger
+    return wrapper

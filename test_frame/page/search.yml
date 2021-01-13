@@ -1,0 +1,7 @@
+-
+  target: '//*[@resource-id = "com.xueqiu.android:id/action_search"]'
+  action: find_and_click
+-
+  target: '//*[@resource-id = "com.xueqiu.android:id/search_input_text"]'
+  action: find_and_send_keys
+  content: 'ali'

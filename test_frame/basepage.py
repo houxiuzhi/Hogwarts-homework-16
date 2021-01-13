@@ -1,15 +1,19 @@
-import logging
-
+import yaml
 from appium import webdriver
 from appium.webdriver import WebElement
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from test_frame.backlist import black_wrapper
 
-from test_frame.backlist import black_wragger
 
 
 class BasePage:
+    Target = 'target'
+    Action = 'action'
+    Content = 'content'
+    Find_and_click = 'find_and_click'
+    Find_and_send_keys = 'find_and_send_keys'
 
     def __init__(self, base_driver: WebDriver = None):
         if base_driver is None:
@@ -37,7 +41,7 @@ class BasePage:
         self.driver.implicitly_wait(15)
         self.blacklist = [(By.XPATH, '//*[@resource-id = "com.xueqiu.android:id/iv_close"]')]
 
-    @black_wragger
+    @black_wrapper
     def find_click(self, by, locator=None):
             self.driver.find_element(by=by, value=locator).click()
 
@@ -73,5 +77,19 @@ class BasePage:
 
     def get_toast_text(self):
         result = self.find(MobileBy.XPATH, "//*[@class='android.widget.Toast']").text
-        logging.info(result)
         return result
+
+    def get_data(self,ymlfile):
+        with open(ymlfile,encoding='utf-8') as f:
+            yamldata = yaml.safe_load(f)
+            for step in yamldata:
+                xpath_target = step.get(self.Target)
+                action = step.get(self.Action)
+                if action == self.Find_and_click:
+                    self.find_click(By.XPATH,xpath_target)
+                elif action == self.Find_and_send_keys:
+                    content = step.get(self.Content)
+                    self.find_send_key(By.XPATH,xpath_target,content)
+
+
+
